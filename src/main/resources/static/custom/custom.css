@@ -1,0 +1,240 @@
+#leftCol {
+    position: fixed;
+    overflow-y: auto;
+
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+ /*
+ for navigation table
+ */
+
+table {
+    border-collapse: separate;
+    border-spacing: 5px 15px;
+    margin-top: 20px;
+    background-color: black ;
+
+}
+
+td{
+    text-align: left;
+
+}
+
+/*table#roleMatchingTblId > th:first-child, td:first-child
+{
+    position:sticky;
+    left:0px;
+    z-index: 2;
+
+}
+#roleMatchingTblId td:first-child
+{
+    background-color:cornflowerblue;
+
+}*/
+
+/*Demo*/
+table#roleMatchingTblId th {
+    /*background:#777;
+    border-right:1px solid #999;
+    color:#FFF;
+    padding:3px;*/
+    position:sticky;
+    top:0;
+    /* ensure header row sits atop everything else when scrolling down */
+    z-index:1;
+}
+table#roleMatchingTblId td:first-child {
+    border: 1px solid black !important;
+    background-color:#aeb9c5;
+}
+/* ensure first header cell sits atop everything else when scrolling right */
+table#roleMatchingTblId th:first-child {
+    position:sticky;
+    left:0;
+    z-index:2;
+}
+/* make first column sticky when scrolling right */
+table#roleMatchingTblId td:first-child {
+    position:sticky;
+    left:0;
+
+    /*border-right-color:#aaa;*/
+}
+/*Demo*/
+
+
+
+
+
+.menutext{
+    padding-right:8px;
+    color: white;
+    margin-top: 5px;
+    text-align: right !important;
+    border: 1px solid white;
+    overflow: auto;
+}
+.advance_search_params{
+    font-size: 12px;
+    color: white
+}
+.table_btn_right_Position{
+    width: 56.5px;
+    height: 46px;
+    margin-left: 100px;
+
+}
+.table_btn_left_Position{
+    width: 56.5px;
+    height: 46px;
+    margin-left: 400px;
+
+}
+.table_btn_keep_value{
+    width: 200px;
+    height: 46px;
+    margin-left: 400px;
+    margin-top: 70px;
+}
+.table_btn_select_diff_value{
+    width: 200px;
+    height: 46px;
+    margin-left: 100px;
+    margin-top: 70px;
+}
+
+
+/*for spinner or loader*/
+body {
+    background: #ececec;
+}
+/*Hidden class for adding and removing*/
+.lds-dual-ring.hidden {
+    display: none;
+}
+
+/*Add an overlay to the entire page blocking any further presses to buttons or other elements.*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,.8);
+    z-index: 999;
+    opacity: 1;
+    transition: all 0.5s;
+}
+
+/*Spinner Styles*/
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+.lds-dual-ring-side {
+    display: inline-block;
+    width: 17%;
+    height: 100%;
+}
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 5% auto;
+    border-radius: 50%;
+    border: 6px solid #000;
+    border-color: #000b16 transparent #00bb00 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+.lds-dual-ring-side:after {
+    content: " ";
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-left: 40%;
+    margin-top: 140%;
+    border-radius: 50%;
+    border: 6px solid #000;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*.hideme {
+    display: none;
+}*/
+
+/*.myDIV:hover + .hideme {
+    display: block;
+    color: red;
+}*/

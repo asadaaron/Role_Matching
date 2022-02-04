@@ -1,0 +1,151 @@
+<div th:fragment="body">
+		<!-- right column -->
+		<div class="col-md-offset-3 col-md-6">
+			<!-- Horizontal Form -->
+			<div class="box box-info">
+				<div class="box-header with-border">
+					<h3 th:if="${loanPurposeEntity.loanPurposeId == null}"
+						class="box-title">Add Loan Purpose</h3>
+					<h3 th:if="${loanPurposeEntity.loanPurposeId != null}"
+						class="box-title">Update Loan Purpose </h3>
+				</div>
+				<div></div>
+				<!-- /.box-header -->
+				<!-- form start -->
+				<!--<form class="form-horizontal" th:action="@{/loanPurpose/create}"-->
+				<form class="form-horizontal" id="loanPurposeFormId" method="post" th:object="${loanPurposeEntity}">
+					<div class="box-body">
+
+						<div class="form-group form-group-code">
+							<label for="code" class="col-sm-2 control-label">Name</label>
+
+							<div class="col-sm-10">
+								<input id="id" name="id" type="hidden" th:field="*{id}"></input>
+								<input type="text" id="name" name ="name" th:field="*{name}" class="form-control"
+									placeholder="Name"></input>
+								<div th:if="${#fields.hasErrors('name')}">
+									<label th:errors="*{name}" style="color: red"></label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Description</label>
+
+							<div class="col-sm-10">
+
+								<textarea id="description" name="description" th:field="*{description}" class="form-control"
+                                          placeholder="Description">
+                                        </textarea>
+							</div>
+						</div>
+						<div></div>
+
+
+
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">
+						<button id="save" th:if="${loanPurposeEntity.loanPurposeId == null}"
+								onclick="saveLoanPurpose()" type="button" class="btn btn-info pull-left">Submit</button>
+						<button th:if="${loanPurposeEntity.loanPurposeId != null}"
+							type="button" class="btn btn-info pull-left">Update</button>
+						<a th:href="@{/loanPurpose/list}" type="submit"
+							class="btn btn-danger pull-right">Cancel</a>
+					</div>
+					<!-- /.box-footer -->
+					<div class="bg-default content-box text-center pad20A mrg25T grid-resize">
+						<table id="jqGrid"></table>
+						<div id="jqGridPager"></div>
+					</div>
+				</form>
+			</div>
+			<!-- /.box -->
+
+			<!-- /.box -->
+		</div>
+		<!--/.col (right) -->
+
+<script type="text/javascript">
+	/*$(document).ready(function () {
+		var id= $('#id').val();
+		var gridId= "jqGrid";
+		header = {
+			'X-CSRF-TOKEN': $('#csr-token').val(),
+			'${_csrf.parameterName}': $('#csr-token').val(),
+		};
+		var url = "${pageContext.request.contextPath}/loanPurpose/list/?id="+id;
+		var formId = 'empdesignationId';
+		var caption = 'Loan Purpose'
+		var urlmethod='POST'
+		var colModel = [
+			{label: 'id', name: 'id', key: true, width: 75, hidden: true},
+			{label: 'Designation', name: 'name', width: 250},
+			{label: 'Start Date ', name: 'start_date', width: 250},
+			{label: 'End Date', name: 'end_date', width: 200},
+			{label: 'Status', name: 'is_active', width: 100,hidden:true},
+		]
+		Server.list(header,url,colModel,formId,caption,urlmethod,gridId);
+	});
+	function edit(empDesId) {
+		console.log("Id : "+empDesId);
+		var action = "${pageContext.request.contextPath}/designation/edit/";
+		header = {
+			'X-CSRF-TOKEN': $('#csr-token').val(),
+			'${_csrf.parameterName}': $('#csr-token').val()
+		};
+		Server.edit(header, action, empDesId,setDataToEdit);
+
+	}
+	function setDataToEdit(result) {
+		Server.resetForm('employeeDesignationId');
+		$('#empdesId').val(result.id);
+		$('#version').val(result.version);
+		$('#active').prop('checked',result.is_active);
+		$('#dateFrom').val(result.start_date)
+		$('#endDate').val(result.end_date)
+		$('#designationId').val(result.designation_id).prop('selected', true);
+		$('#saveButton').val('Update');
+	}
+	function deleteEmpAdd() {
+		header = {
+			'X-CSRF-TOKEN': $('#csr-token').val(),
+			'${_csrf.parameterName}': $('#csr-token').val()
+		};
+		var content = 'Are you sure you want to delete the this address?';
+		var formId=$('#deleteButton').closest('form').attr('id');
+		var caption = "Employee Address"
+		var url ="${pageContext.request.contextPath}/employee/address/delete/";
+		var gridId="jqGridAdd"
+		var _form_values = $('#empAddFormId').serializeJSON();
+		Server.delete(header,url,_form_values,formId,content,caption,gridId);
+	}*/
+
+	/*
+     *save Employee Address
+     */
+	function saveLoanPurpose() {
+		alert("hello world")
+		header = {
+			'X-CSRF-TOKEN': $('#csr-token').val(),
+			'${_csrf.parameterName}': $('#csr-token').val()
+		};
+		var caption = "Loan Purpose"
+		var formId = $('#saveButton').closest('form').attr('id');
+		var gridId= "jqGrid";
+		var _form_values =$('#loanPurposeFormId').serializeJSON();
+		//var _form_values = $('#employeeDesignationId').serializeJSON();
+		console.log(_form_values);
+		if ($('#id').val() > 0) {
+			var action ="/loanPurpose/update";
+		} else {
+			var action ="/designation/save";
+		}
+
+		Server.save(header, _form_values, action, formId, caption,gridId);
+		//Server.resetForm(formId);
+	}
+
+
+</script>
+</div>
+
