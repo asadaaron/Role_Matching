@@ -1,3 +1,5 @@
+
+// Retrieve menu from the backend.
 $(document).ready(function () {
     var action = "/tabledata";
     header = {
@@ -45,7 +47,7 @@ $(document).ready(function () {
             alert("Error!" + e)
         }
     });
-
+//format the click score at two decimal value
     function two_decimal_digit(value,digit_length_after_decimal) {
         var non_zero_counter = 0;
         var BreakException = {};
@@ -86,14 +88,9 @@ $(document).ready(function () {
         return display_digit
     }
 
-    /*$('button').click(function(){
-        alert("Modal")
-        $("#myModal").modal('show');
-    });*/
 
 });
-
-//$( "#searchBtnId" ).click(function() {
+// advance search functionality
 $(".sa_search").click(function () {
     var searchstring = $("#searchInputId").val() == '' ? 'NAN' : $("#searchInputId").val();
     var size_max = $("#size_max").val() == '' ? 10000 : $("#size_max").val();
@@ -103,7 +100,6 @@ $(".sa_search").click(function () {
     var is_all = $("#allroles").is(':checked') ? true : false;
     var atleast_one = $("#atleastonerole").is(':checked') ? true : false;
     var property_or_role_id = $("#proper_role_id").val() == '' ? 'NAN' : $("#proper_role_id").val();
-    //var action = "/searchrolematching/"+searchstring;
     var contentId = $("#contentId").val()
     var percentage = $("#percentage").val()
     var all_mismatch = $("#all_mismatch").is(':checked') ? true : false;
@@ -164,23 +160,9 @@ $(".sa_search").click(function () {
                 //alert(digit_length_after_decimal)
             });
             $.each(result.roleMatchingRangeWise, function (index, element) {
-                //console.log(result);
-                /*$.each(result[index], function(key, value) {
-                    console.log(key);
-                });*/
-                //console.log(result.menus[index]);
                 var clique_score = element + '';
                 console.log(clique_score)
                 var score_element = two_decimal_digit(clique_score,digit_length_after_decimal)
-                /*var menuList = '<li class="nav-item">\n' +
-                    '                            <a href="#" class="nav-link">\n' +
-                    '                                <i class="nav-icon fas fa-tachometer-alt"></i>\n' +
-                    '                                <p>\n' +
-                    index.split('_RM_')[1]  + ' &nbsp; | &nbsp;&nbsp; ' +score_element + ' &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp ' + index.split('_RM_')[0] +
-                    /!*   '                                    <i class="right fas fa-angle-left"></i>\n' +*!/
-                    '                                </p>\n' +
-                    '                            </a>\n' +
-                    '                        </li>';*/
                 var menuList = '<tr><td class="roleId menutext"">\n' +
                     '<a href="#" >' +
                     index.split('_RM_')[1] + '</td><td class="menutext"> ' + score_element + ' </td><td class="menutext">' + index.split('_RM_')[0] +
@@ -189,7 +171,6 @@ $(".sa_search").click(function () {
                     '</td></tr>';
                 console.log(menuList)
                 $('#tableId').append(menuList);
-                //$('#dynamicMenuId').append(menuList);
 
             });
             advance_params_empty();
@@ -204,6 +185,7 @@ $(".sa_search").click(function () {
         }
     });
 });
+// after clicking the search button, the modal will empty by this function
 function advance_params_empty(){
     $("#score_min").val('');
     $("#score_max").val('');
@@ -218,6 +200,7 @@ function advance_params_empty(){
     $("#per_role_id").val('');
     $("#per_role_id_match").val('');
 }
+// to show the searched parameter in the left hand side menu bar
 function advance_params_show(){
     $('#advance_search_params').empty();
      var score_min = $("#score_min").val();
@@ -250,7 +233,7 @@ function advance_params_show(){
 
     }
 
-
+// show the previous and next role matching id in the left side menu bar
 $(".nav-pre-next-btn").click(function () {
     console.log(this.id);
     var nav_btn = this.id;
@@ -311,22 +294,8 @@ $(".nav-pre-next-btn").click(function () {
                 //alert(digit_length_after_decimal)
             });
             $.each(result.roleMatchingRangeWise, function (index, element) {
-                //console.log(result);
-                /*$.each(result[index], function(key, value) {
-                    console.log(key);
-                });*/
-                //console.log(result.menus[index]);
                 var clique_score = element + '';
                 var score_element = two_decimal_digit(clique_score,digit_length_after_decimal)
-                /* var menuList = '<li class="nav-item">\n' +
-                 '                            <a href="#" class="nav-link">\n' +
-                 '                                <i class="nav-icon fas fa-tachometer-alt"></i>\n' +
-                 '                                <p>\n' +
-                 index.split('_RM_')[1]  + ' &nbsp; | &nbsp;&nbsp; ' +score_element + ' &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp ' + index.split('_RM_')[0] +
-                 /!*   '                                    <i class="right fas fa-angle-left"></i>\n' +*!/
-                 '                                </p>\n' +
-                 '                            </a>\n' +
-                 '                        </li>';*/
                 var menuList = '<tr><td class="roleId menutext"">\n' +
                     '<a href="#" >' +
                     index.split('_RM_')[1] + '</td><td class="menutext"> ' + score_element + ' </td><td class="menutext">' + index.split('_RM_')[0] +
@@ -342,10 +311,12 @@ $(".nav-pre-next-btn").click(function () {
         }
     });
 });
-let pointing_array = []
-let current_status = 0;
-let offset = 0;
+let pointing_array = [] // array of mismatch column list
+let current_status = 0; // current status of the column which is focused
+let offset = 0; // base location of the pointer
 //Use a delegated event.  Every click on an "a" element within the ##navigation_bar will trigger this
+// This function will load data into the rolematching table and automatically focus the last column of the table.
+// It will also set the color of the content of the column
 $('#dynamicMenuId').on('click', 'a', function () {
     // Get li containing the link clicked
     var menuName = $(this).text(); //$(this).closest('li').html();
@@ -430,7 +401,7 @@ $('#dynamicMenuId').on('click', 'a', function () {
                 var table = document.getElementById("roleMatchingTblId");
                 //var row = table.rows[current_border]
                 const content_color_map = new Map();
-                var colors = ['black', 'green', 'blue', 'DarkRed', 'Chocolate', 'DarkBlue', 'DarkCyan','DarkSlateGrey'];
+                var colors = ['black', 'green', 'blue', 'DarkRed', 'Chocolate', 'DarkBlue', 'DarkCyan','DarkSlateGrey']; // color for the content of the table
                 for (var i = 0, row; row = table.rows[i]; i++) {
                     //iterate through rows
                     //rows would be accessed using the "row" variable assigned in the for loop
@@ -473,7 +444,7 @@ $('#dynamicMenuId').on('click', 'a', function () {
         }
     });
 });
-
+// format the clique at two decimal point
 function two_decimal_digit(value,digit_length_after_decimal) {
     if (!value.includes("."))
         value += '.0'
@@ -515,7 +486,7 @@ function two_decimal_digit(value,digit_length_after_decimal) {
     //console.log(display_digit)
     return display_digit
 }
-
+// navigate the horizontal scroll bar to the previous mismatch column
 $("#previous_tbl_nav").click(function () {
     var current_pre_data
     if(typeof pointing_array[current_status-1] === 'undefined') {
@@ -565,6 +536,8 @@ $("#previous_tbl_nav").click(function () {
     );
 
 });
+
+// navigate the horizontal scroll bar to the next mismatch column
 $("#next_tbl_nav").click(function() {
     if(typeof pointing_array[current_status+1] === 'undefined') {
        /*alert("Not Available")*/
@@ -618,6 +591,7 @@ $("#next_tbl_nav").click(function() {
         "slow"
     );
 });
+// show the percentage of min role matching input field
 $("#per_role_id_match").click(function() {
     $("#role_per_div_id").removeClass('hidden')
 });
@@ -627,6 +601,7 @@ $("#allroles").click(function() {
 $("#atleastonerole").click(function() {
     $("#role_per_div_id").addClass('hidden')
 });
+// show the note about the content in the content search
 $( ".myDIV" ).hover(
     function() {
         $("#info-id").removeClass("hidden");
@@ -634,6 +609,7 @@ $( ".myDIV" ).hover(
         $("#info-id").addClass("hidden");
     }
 );
+// show the note about the content in the content search
 $( "#content-icon-id" ).hover(
     function() {
         $("#info-id-content").removeClass("hidden");

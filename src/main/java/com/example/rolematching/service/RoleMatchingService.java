@@ -16,7 +16,7 @@ import java.time.Instant;
 import java.util.*;
 
 @Service
-public class GreetingService {
+public class RoleMatchingService {
     Map<String, List<TimeStampValue>> roleAndTimeStamp = new HashMap<String, List<TimeStampValue>>();
     Map<String, RoleMatching> roleMatchingMap = new HashMap<>();
     public String menuSample() throws FileNotFoundException, UnsupportedEncodingException {

@@ -1,6 +1,5 @@
 package com.example.rolematching.controller;
-import com.example.rolematching.Util.RoleMatchingFileProcessing;
-import com.example.rolematching.service.GreetingService;
+import com.example.rolematching.service.RoleMatchingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +11,9 @@ import java.security.Principal;
 
 
 @Controller
-public class GreetingController {
+public class RoleMatchingController {
     @Autowired
-    private GreetingService greetingService;
+    private RoleMatchingService roleMatchingService;
 
     @GetMapping(value = "/dashboard")
     public String create (Model model, Principal principal) {
@@ -24,14 +23,14 @@ public class GreetingController {
     @ResponseBody
     @RequestMapping(value = "/tabledata", method = RequestMethod.GET)
     public String loadTableAndMenu (Model model, Principal principal) throws FileNotFoundException, UnsupportedEncodingException {
-        String menuList = greetingService.menuSample();
+        String menuList = roleMatchingService.menuSample();
         return menuList;
     }
 
     @ResponseBody
     @RequestMapping(value = "/searchrolematching/{contentId}/{percentage}", method = RequestMethod.GET)
     public String search(@PathVariable("contentId")String contentSearch ,@PathVariable("percentage") String percentage) throws FileNotFoundException, UnsupportedEncodingException {
-        String menuList = greetingService.searchContent(contentSearch,percentage);
+        String menuList = roleMatchingService.searchContent(contentSearch,percentage);
         return menuList;
     }
 
@@ -42,7 +41,7 @@ public class GreetingController {
     public String tableDataForRoleMatching(@PathVariable("menuName") String menuName) {
         String menuList= null;
         try{
-             menuList = greetingService.toJsonString(menuName);
+             menuList = roleMatchingService.toJsonString(menuName);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -53,7 +52,7 @@ public class GreetingController {
     @ResponseBody
     @RequestMapping(value = "/rangewisemenu/{params}", method = RequestMethod.GET)
     public String rangeWiseRole(@PathVariable("params") String range) {
-        String menuList = greetingService.rangeWiseMenuList(range);
+        String menuList = roleMatchingService.rangeWiseMenuList(range);
         return menuList;
     }
     @ResponseBody
@@ -65,7 +64,7 @@ public class GreetingController {
                               @PathVariable("atleast_one") String atleastOne) {
         String menuList = null;
         try {
-            menuList = greetingService.searchVariable(sizeMax,sizeMin,scoreMin,scoreMax,isAll,searchString,propertyOrRole,percentageOfRole,atleastOne);
+            menuList = roleMatchingService.searchVariable(sizeMax,sizeMin,scoreMin,scoreMax,isAll,searchString,propertyOrRole,percentageOfRole,atleastOne);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -80,7 +79,7 @@ public class GreetingController {
     public String mismatchSearch(@PathVariable("all_mismatch") boolean all_mismatch) {
         String menuList = null;
         try {
-            menuList = greetingService.findMismatchRoleMatchigString();
+            menuList = roleMatchingService.findMismatchRoleMatchigString();
         } catch (Exception e) {
             e.printStackTrace();
         }
