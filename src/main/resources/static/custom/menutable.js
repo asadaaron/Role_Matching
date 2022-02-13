@@ -106,6 +106,7 @@ $(".sa_search").click(function () {
     //var action = "/searchrolematching/"+searchstring;
     var contentId = $("#contentId").val()
     var percentage = $("#percentage").val()
+    var all_mismatch = $("#all_mismatch").is(':checked') ? true : false;
     // For the role matching id search
     var percen_role = $("#per_role_id").val()== '' ? 100 : $("#per_role_id").val();
     var percentage_role_check = $("#per_role_id_match").is(':checked') ? true : false;
@@ -123,8 +124,10 @@ $(".sa_search").click(function () {
         }
 
     }
-    if(contentId== '')
+    if(contentId== '' && !all_mismatch)
         var action = "/searchrolematching/" + size_max + "/" + size_min + "/" + score_min + "/" + score_max + "/" + is_all + "/" + searchstring + "/" + property_or_role_id+"/" + percen_role+ "/" + atleast_one;
+    else if(all_mismatch )
+        var action = "/searchmismatchrolematching/" + all_mismatch;
     else
         var action = "/searchrolematching/" + contentId+"/"+percentage;
     header = {
@@ -207,7 +210,8 @@ function advance_params_empty(){
     $("#size_min").val('');
     $("#size_max").val('');
     $("#proper_role_id").val('');
-    //$("#allroles").val('')
+    $("#all_mismatch").val('')
+    $("#all_role_matching_id").val('')
     //$("#atleastonerole").
     $("#contentId").val('');
     $("#percentage").val('');
@@ -396,7 +400,7 @@ $('#dynamicMenuId').on('click', 'a', function () {
                     pointing_counter +=1
                     pointing_array.push(pointing_counter)
                     console.log(pointing_array)
-                    table_header += '<th class="'+pointing_counter+'" style="color: red" > Current Date (07-09-2019!) </th>\n'
+                    table_header += '<th class="'+pointing_counter+'" > Current Date (07-09-2019) </th>\n'
                     table_header += '</thead>'
                     //console.log(table_header)
 
@@ -426,7 +430,7 @@ $('#dynamicMenuId').on('click', 'a', function () {
                 var table = document.getElementById("roleMatchingTblId");
                 //var row = table.rows[current_border]
                 const content_color_map = new Map();
-                var colors = ['red', 'green', 'blue', 'DarkRed', 'Chocolate', 'DarkBlue', 'DarkCyan','DarkSlateGrey'];
+                var colors = ['black', 'green', 'blue', 'DarkRed', 'Chocolate', 'DarkBlue', 'DarkCyan','DarkSlateGrey'];
                 for (var i = 0, row; row = table.rows[i]; i++) {
                     //iterate through rows
                     //rows would be accessed using the "row" variable assigned in the for loop
@@ -515,7 +519,7 @@ function two_decimal_digit(value,digit_length_after_decimal) {
 $("#previous_tbl_nav").click(function () {
     var current_pre_data
     if(typeof pointing_array[current_status-1] === 'undefined') {
-        alert("Not Available")
+        //alert("Not Available")
         return
     }
     else {
@@ -563,7 +567,7 @@ $("#previous_tbl_nav").click(function () {
 });
 $("#next_tbl_nav").click(function() {
     if(typeof pointing_array[current_status+1] === 'undefined') {
-       alert("Not Available")
+       /*alert("Not Available")*/
        return
     }
     else {

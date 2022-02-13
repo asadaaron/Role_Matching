@@ -75,5 +75,18 @@ public class GreetingController {
         return menuList;
 
     }
+    @ResponseBody
+    @RequestMapping(value = "/searchmismatchrolematching/{all_mismatch}", method = RequestMethod.GET)
+    public String mismatchSearch(@PathVariable("all_mismatch") boolean all_mismatch) {
+        String menuList = null;
+        try {
+            menuList = greetingService.findMismatchRoleMatchigString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //String menuList = greetingService.searchVariable(searchstring);
+        return menuList;
+
+    }
 
 }
