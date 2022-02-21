@@ -19,6 +19,13 @@ import java.util.*;
 public class RoleMatchingService {
     Map<String, List<TimeStampValue>> roleAndTimeStamp = new HashMap<String, List<TimeStampValue>>();
     Map<String, RoleMatching> roleMatchingMap = new HashMap<>();
+
+    /**
+     *
+     * @return menu list as a Json string
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
+     */
     public String menuSample() throws FileNotFoundException, UnsupportedEncodingException {
         RoleMatchingFileProcessing roleMatchingFileProcessing = new RoleMatchingFileProcessing();
         roleMatchingMap = roleMatchingFileProcessing.processRoleMatchingFile();
@@ -45,6 +52,12 @@ public class RoleMatchingService {
         menus.setTotalRoleMatching(roleMatchingSortedMap.size());
         return JSONUtil.getJsonObject(menus);
     }
+
+    /**
+     *
+     * @param range
+     * @return menulist within a specific range
+     */
     public String rangeWiseMenuList(String range){
         List<String> menuList = new ArrayList<String>();
         int lowerRange = Integer.valueOf(range);
@@ -99,23 +112,18 @@ public class RoleMatchingService {
                         boolean flag = false;
                         for(Integer roleId: roleMatchingEntry.getValue().getRoleList()){ // for each role find the corresponding key name in roleAndTimeStamp
                             String wikiLink = jsonFileProcessing.roleRoleAndTimeStampMapping.get(roleId.toString()); // key name of the roleAndTimeStamp map
-                            //List<TimeStampValue>  timeStampValues = roleAndTimeStamp.get(wikiLink); // find out the value for the role to fill the table
-                            //randomlySelectedTimeAndValue.put(wikiLink,timeStampValues);
                             String property = wikiLink.split("____")[1];
                             if(property.split("\\.")[1].contains(propertyOrRole) || roleId.toString().contains(propertyOrRole)){// full text search 
                                 counter ++;
                                 flag = true;
-                                //roleMatchingBySize.put(roleMatchingEntry.getKey(), roleMatchingEntry.getValue());
                             }
-
-
                         }
                         double percentageCounter = (double)counter/(double)roleMatchingRoleSize * 100;
-                        if(is_all.equals("true") ){
+                        if(is_all.equals("true") ){ // condition for the is all radio button checked
                             if(roleMatchingRoleSize==counter){
                                 roleMatchingBySize.put(roleMatchingEntry.getKey(), roleMatchingEntry.getValue());
                             }
-                        }else if (flag && atleastOne.equals("true") ){
+                        }else if (flag && atleastOne.equals("true") ){ //condition for at least one radio button checked
                             roleMatchingBySize.put(roleMatchingEntry.getKey(), roleMatchingEntry.getValue());
                         }else if(flag && percentageCounter  >=  Double.valueOf(percentageOfRole) ){
                             roleMatchingBySize.put(roleMatchingEntry.getKey(), roleMatchingEntry.getValue());
@@ -125,7 +133,7 @@ public class RoleMatchingService {
                 }
             }
         }else{
-            if (!sizeMax.isEmpty() && !sizeMin.isEmpty()) {
+            if (!sizeMax.isEmpty() && !sizeMin.isEmpty()) {  // condition for the min and max size for the no of role in the role matching
                 for (Map.Entry<String, RoleMatching> roleMatchingEntry : roleMatchingMap.entrySet()) {
                     if (roleMatchingEntry.getValue().getRoleList().size() >= Integer.valueOf(sizeMin) && roleMatchingEntry.getValue().getRoleList().size() <= Integer.valueOf(sizeMax)) {
                         roleMatchingBySize.put(roleMatchingEntry.getKey(), roleMatchingEntry.getValue());
@@ -133,7 +141,7 @@ public class RoleMatchingService {
                 }
             }
         }
-        if(!scoreMin.isEmpty() && !scoreMax.isEmpty()) {
+        if(!scoreMin.isEmpty() && !scoreMax.isEmpty()) { // condition for the min an max clique score of the role matching
             for (Map.Entry<String, RoleMatching> roleMatchingEntry : roleMatchingBySize.entrySet()) {
                 if (Double.valueOf(roleMatchingEntry.getValue().getCliqueScore()) >= Double.valueOf(scoreMin) && Double.valueOf(roleMatchingEntry.getValue().getCliqueScore()) <= Double.valueOf(scoreMax)) {
                     roleMatchingByScore.put(roleMatchingEntry.getKey(),roleMatchingEntry.getValue());

@@ -1,8 +1,10 @@
 package com.example.rolematching.model;
 
-import java.util.List;
 import java.util.Map;
 
+/**
+ * Business object for the menu in the left side
+ */
 public class Menu {
     private Map<String, Double> roleMatchingRangeWise;
     private int upperRange=100;
