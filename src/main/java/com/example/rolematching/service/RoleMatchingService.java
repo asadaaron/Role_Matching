@@ -282,7 +282,7 @@ public class RoleMatchingService {
                         TableDataOfRoleMatching tableDataOfRoleMatching = new TableDataOfRoleMatching();
                         //tableDataOfRoleMatching.setTimeStamp(valueOnTimeStamp.getTimeStamp());
                         tableDataOfRoleMatching.setTimeStamp(JSONUtil.convertToDateTime(timetracker));
-
+                        // remove unexpected output from the rolematching table
                         if(valueOnTimeStamp.getValue().equals("\u200c⊥R\u200c")  || valueOnTimeStamp.getValue().equals("\u200c⊥C\u200c") ||
                                 valueOnTimeStamp.getValue().equals("\u200c⊥D\u200c") || valueOnTimeStamp.getValue().equals("\u200c⊥CE\u200c")||
                                 valueOnTimeStamp.getValue().equals("\u200c⊥V\u200c") || valueOnTimeStamp.getValue().trim().isEmpty())
@@ -410,7 +410,7 @@ public class RoleMatchingService {
                         TableDataOfRoleMatching tableDataOfRoleMatching = new TableDataOfRoleMatching();
                         //tableDataOfRoleMatching.setTimeStamp(valueOnTimeStamp.getTimeStamp());
                         tableDataOfRoleMatching.setTimeStamp(JSONUtil.convertToDateTime(timetracker));
-
+                    // remove unexpected letter from rolematching table
                         if(valueOnTimeStamp.getValue().equals("\u200c⊥R\u200c")  || valueOnTimeStamp.getValue().equals("\u200c⊥C\u200c") ||
                                 valueOnTimeStamp.getValue().equals("\u200c⊥D\u200c") || valueOnTimeStamp.getValue().equals("\u200c⊥CE\u200c")||
                                 valueOnTimeStamp.getValue().equals("\u200c⊥V\u200c") || valueOnTimeStamp.getValue().trim().isEmpty())
@@ -474,7 +474,7 @@ public class RoleMatchingService {
 
     }
 
-
+// find rolematching id having mismatch in content on the column
     public String findMismatchRoleMatchigString(){
         Map <String, Double> roleMatchingRangeWise = new HashMap<>();
         for (Map.Entry<String, RoleMatching> roleMatchingEntry : roleMatchingMap.entrySet()) {

@@ -8,10 +8,14 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
+/**
+ * Processing of json file
+ *
+ */
 public class JsonFileProcessing {
     public static Map<String, String> roleRoleAndTimeStampMapping = new HashMap<>();
     public static Map<String, List<TimeStampValue>> jsonFile() throws FileNotFoundException, UnsupportedEncodingException {
-        InputStream is = new FileInputStream(new File("/Users/potsdum digital Health Program/politics.json"));
+        InputStream is = new FileInputStream(new File("/Users/potsdum digital Health Program/politics.json"));// reading json file
         Reader r = new InputStreamReader(is, "UTF-8");
         Gson gson = new GsonBuilder().create();
         JsonStreamParser p = new JsonStreamParser(r);
@@ -22,10 +26,6 @@ public class JsonFileProcessing {
             if (e.isJsonObject()) {
                 Map m = gson.fromJson(e, Map.class);
                 LinkedTreeMap<String, Object> roleList  = (LinkedTreeMap<String, Object>) m.get("positionToRoleLineage");
-                /*for(JsonElement roleId : ((JsonObject) e).getAsJsonArray("positionToRoleLineage")) {
-                    JsonElement getRoleValue = ((JsonObject) roleId).getAsJsonObject("roleLineage");
-
-                }*/
                 roleList.entrySet().stream().forEach( tstampValue -> {
                     Object roleLineage = tstampValue.getValue();
                     String infoboxId = String.valueOf(((LinkedTreeMap) roleLineage).get("id"));
@@ -46,9 +46,6 @@ public class JsonFileProcessing {
                         TimeStampValue   timeStampValue = new TimeStampValue();
                         timeStampValue.setTimeStamp(tvalue.getKey().toString());
                         timeStampValue.setValue(tvalue.getValue().toString().trim());
-
-                        //timeStampValue.setWikiLink(wikiLink);
-                        //timeStampValue.setDisplayInformation(displayInformation);
                         try {
                             timeStampValue.setTimeInstant(JSONUtil.convertToInstant(tvalue.getKey().toString()));
                         } catch (ParseException parseException) {

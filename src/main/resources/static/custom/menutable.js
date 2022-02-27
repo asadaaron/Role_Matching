@@ -296,6 +296,7 @@ $(".nav-pre-next-btn").click(function () {
             $.each(result.roleMatchingRangeWise, function (index, element) {
                 var clique_score = element + '';
                 var score_element = two_decimal_digit(clique_score,digit_length_after_decimal)
+                //set the row in the left side table
                 var menuList = '<tr><td class="roleId menutext"">\n' +
                     '<a href="#" >' +
                     index.split('_RM_')[1] + '</td><td class="menutext"> ' + score_element + ' </td><td class="menutext">' + index.split('_RM_')[0] +
